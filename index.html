@@ -3784,6 +3784,12 @@ function streakFromLog(s){
   return n;
 }
 function esc(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+/* 2026.10.15a：题库选项文本自带「A.」「B、」等前缀，与界面上的字母徽标重复显示。
+   渲染选项时统一剥掉开头的前缀（仅当字母后紧跟标点才剥，避免误伤「C 语言」「A/B 测试」这类正文）。
+   注意：只改显示，不改判分依据（判分用的是下标 item.correct，与文本无关）。 */
+function stripOptPrefix(t){
+  return String(t==null?"":t).replace(/^\s*[A-Da-dＡ-Ｄａ-ｄ][\.、．:：,，;；)）]\s*/, "");
+}
 function toast(msg){
   const t=document.getElementById("toast");
   t.textContent=msg; t.style.display="block";
@@ -9428,7 +9434,7 @@ function showCard(){
         <div class="q-option-label">请选择正确答案：</div>
         ${item.options.map((opt,i)=>`
           <button class="option-btn" onclick="answerChoice(${i}, ${item.correct})">
-            <span class="opt-letter">${String.fromCharCode(65+i)}.</span> ${esc(opt)}
+            <span class="opt-letter">${String.fromCharCode(65+i)}.</span> ${esc(stripOptPrefix(opt))}
           </button>
         `).join("")}
       </div>
@@ -12337,7 +12343,7 @@ initCloud();
     if(item.type === "choice"){
       body = "<div class=\"q-options\">" +
         item.options.map(function(opt, i){
-          return "<button class=\"option-btn\" onclick=\"rvPick(" + i + "," + item.correct + ")\"><span class=\"opt-letter\">" + String.fromCharCode(65 + i) + ".</span> " + esc(opt) + "</button>";
+          return "<button class=\"option-btn\" onclick=\"rvPick(" + i + "," + item.correct + ")\"><span class=\"opt-letter\">" + String.fromCharCode(65 + i) + ".</span> " + esc(stripOptPrefix(opt)) + "</button>";
         }).join("") + "</div><div id=\"rvRes\"></div>";
     } else if(item.type === "judge"){
       body = "<div class=\"q-judge\">" +
