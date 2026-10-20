@@ -406,7 +406,8 @@ h1,h2,h3{font-weight:700}
 @keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
 
 /* 底部导航 */
-.bottombar{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);display:flex;z-index:40}
+.bottombar{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);display:flex;z-index:40;padding-bottom:14px}
+.bottombar:after{content:"© 2026 Ivy · 保留所有权利 · 未经授权不得商用";position:absolute;left:0;right:0;bottom:1px;font-size:9px;line-height:11px;text-align:center;color:#9aa0a6;pointer-events:none}
 .bottombar button{flex:1;padding:10px 4px;background:none;font-size:11.5px;color:var(--muted);font-weight:600}
 .bottombar button .bi{font-size:20px;display:block}
 .bottombar button.active{color:var(--green)}
@@ -889,7 +890,7 @@ h1,h2,h3{font-weight:700}
   .travel-modal{max-height:calc(100vh - 60px)}
   .store-modal{max-height:calc(100vh - 60px)}
   /* 底部导航：适配安全区，字号略放大 */
-  .bottombar{padding-bottom:env(safe-area-inset-bottom)}
+  .bottombar{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 14px)}
   .bottombar button{padding:9px 2px;font-size:11px}
   .bottombar button .bi{font-size:22px}
   /* toast 不超出屏幕 */
@@ -11741,7 +11742,7 @@ function isNewerVersion(a,b){ // 比较 x.y.z[后缀] 版本号，a 是否比 b 
   for(let i=0;i<3;i++){ const x=pa[i]||0, y=pb[i]||0; if(x!==y) return x>y; }
   return false;
 }
-var APP_VERSION = "1.0.1";
+var APP_VERSION = "1.0.2";
 (function(){
   try{
     var banner = null;
@@ -17638,6 +17639,5 @@ initCloud();
   try{ if(typeof renderBookshelf==="function") renderBookshelf(); }catch(err){}
 })();
 </script>
-<div id="site-copyright" style="position:fixed;left:0;right:0;bottom:0;z-index:2147483647;pointer-events:none;text-align:center;font-size:11px;line-height:16px;color:#9aa0a6;background:rgba(255,255,255,.92);border-top:1px solid #eee;padding:3px 8px;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'PingFang SC','Microsoft YaHei',sans-serif;">© 2026 Ivy · 保留所有权利 · 未经授权不得商用</div>
 </body>
 </html>
